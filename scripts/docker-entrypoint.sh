@@ -26,4 +26,9 @@ if [ "$changed" = "1" ]; then
     chown -R node:node /paperclip
 fi
 
+# Ensure agent workspace is writable (volume mounts default to root)
+if [ -d /workspace ]; then
+    chown node:node /workspace
+fi
+
 exec gosu node "$@"
