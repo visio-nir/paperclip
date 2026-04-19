@@ -56,6 +56,9 @@ ARG USER_GID=1000
 WORKDIR /app
 COPY --chown=node:node --from=build /app /app
 RUN npm install --global --omit=dev @anthropic-ai/claude-code@latest @openai/codex@latest opencode-ai \
+  && curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh \
+  && uv tool install code-review-graph \
+  && ln -s /root/.local/share/uv/tools/code-review-graph/bin/code-review-graph /usr/local/bin/code-review-graph \
   && mkdir -p /paperclip \
   && chown node:node /paperclip
 
